@@ -1,6 +1,7 @@
 const NPM_REGISTRY_BASE_URL = "https://registry.npmmirror.com/";
 const packageName = "packageName";
 const blogDomain = "blog.example.com"; // 博客域名，根据实际情况替换
+const blogVersion = "latest"; // 博客版本，根据实际情况替换
 const localMode = false; // 本地模式标志，设置为true时将忽略域名检查
 
 self.addEventListener("install", (event) => {
@@ -31,7 +32,7 @@ self.addEventListener("fetch", (event) => {
       relPath += "index.html";
     }
 
-    const npmPath = `${NPM_REGISTRY_BASE_URL}${packageName}/latest/files${relPath}`;
+    const npmPath = `${NPM_REGISTRY_BASE_URL}${packageName}/${blogVersion}/files${relPath}`;
 
     event.respondWith(
       fetch(npmPath)
