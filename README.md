@@ -24,7 +24,7 @@ English | [中文（简体）][1]
 
 1. Cloning this project
 2. Changing "packageName" in "sw.js" to your own package name
-3. Change "" in sw.js to your version (default **latest**)
+3. Change "blogVersion" in sw.js to your version (default **latest**)
 4. Deploying this project
 5. Enjoy it!
 
@@ -52,7 +52,7 @@ English | [中文（简体）][1]
 
 1. 克隆这个项目
 2. 修改 sw.js 中的 "packageName" 为你的包名
-3. 修改 sw.js 中的 "" 为你的版本（默认 **latest**）
+3. 修改 sw.js 中的 "blogVersion" 为你的版本（默认 **latest**）
 4. 部署
 5. 完成！
 
