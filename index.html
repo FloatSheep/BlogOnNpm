@@ -1,16 +1,316 @@
-<html lang="en">
+<html id="web-bg" lang="zh-cn">
   <head>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw.js")
-          .then(function (registration) {
-            console.log("Service Worker 注册成功:", registration);
-          })
-          .catch(function (err) {
-            console.log("Service Worker 注册失败:", err);
-          });
+    <meta name="description" content="Service Worker 需求！" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>加载中...</title>
+    <noscript
+      ><center>
+        <h1>
+          你（或浏览器）禁用了 JavaScript，因此你将无法继续注册！
+        </h1>
+      </center></noscript
+    >
+    <style>
+      @media (prefers-color-scheme: light) {
+        #web-bg {
+          background-color: #fff;
+        }
       }
+      @media (prefers-color-scheme: dark) {
+        #web-bg {
+          background-color: #141e26;
+        }
+      }
+      .svg-on {
+        width: 50%;
+        height: 50%;
+        padding-bottom: 22rem;
+      }
+      .svg-down {
+        width: 7%;
+        height: 7%;
+        margin-top: -1rem;
+      }
+      .loading,
+      .loading > div {
+        position: relative;
+        box-sizing: border-box;
+      }
+      @media (prefers-color-scheme: light) {
+        .loading {
+          display: block;
+          font-size: 0;
+          color: #f98048;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        .loading {
+          display: block;
+          font-size: 0;
+          color: rgba(100, 150, 200, 0.5);
+        }
+      }
+      .loading.la-dark {
+        color: #f98048;
+      }
+
+      .loading > div {
+        display: inline-block;
+        float: none;
+        background-color: currentColor;
+        border: 0 solid currentColor;
+      }
+
+      .loading {
+        width: 18px;
+        height: 18px;
+      }
+
+      .loading > div {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 0;
+        opacity: 0;
+        transform: translate(100%, 100%);
+        animation: ball-8bits 1s 0s ease infinite;
+      }
+
+      .loading > div:nth-child(1) {
+        animation-delay: -0.9375s;
+      }
+
+      .loading > div:nth-child(2) {
+        animation-delay: -0.875s;
+      }
+
+      .loading > div:nth-child(3) {
+        animation-delay: -0.8125s;
+      }
+
+      .loading > div:nth-child(4) {
+        animation-delay: -0.75s;
+      }
+
+      .loading > div:nth-child(5) {
+        animation-delay: -0.6875s;
+      }
+
+      .loading > div:nth-child(6) {
+        animation-delay: -0.625s;
+      }
+
+      .loading > div:nth-child(7) {
+        animation-delay: -0.5625s;
+      }
+
+      .loading > div:nth-child(8) {
+        animation-delay: -0.5s;
+      }
+
+      .loading > div:nth-child(9) {
+        animation-delay: -0.4375s;
+      }
+
+      .loading > div:nth-child(10) {
+        animation-delay: -0.375s;
+      }
+
+      .loading > div:nth-child(11) {
+        animation-delay: -0.3125s;
+      }
+
+      .loading > div:nth-child(12) {
+        animation-delay: -0.25s;
+      }
+
+      .loading > div:nth-child(13) {
+        animation-delay: -0.1875s;
+      }
+
+      .loading > div:nth-child(14) {
+        animation-delay: -0.125s;
+      }
+
+      .loading > div:nth-child(15) {
+        animation-delay: -0.0625s;
+      }
+
+      .loading > div:nth-child(16) {
+        animation-delay: 0s;
+      }
+
+      .loading > div:nth-child(1) {
+        top: -100%;
+        left: 0;
+      }
+
+      .loading > div:nth-child(2) {
+        top: -100%;
+        left: 33.3333333333%;
+      }
+
+      .loading > div:nth-child(3) {
+        top: -66.6666666667%;
+        left: 66.6666666667%;
+      }
+
+      .loading > div:nth-child(4) {
+        top: -33.3333333333%;
+        left: 100%;
+      }
+
+      .loading > div:nth-child(5) {
+        top: 0;
+        left: 100%;
+      }
+
+      .loading > div:nth-child(6) {
+        top: 33.3333333333%;
+        left: 100%;
+      }
+
+      .loading > div:nth-child(7) {
+        top: 66.6666666667%;
+        left: 66.6666666667%;
+      }
+
+      .loading > div:nth-child(8) {
+        top: 100%;
+        left: 33.3333333333%;
+      }
+
+      .loading > div:nth-child(9) {
+        top: 100%;
+        left: 0;
+      }
+
+      .loading > div:nth-child(10) {
+        top: 100%;
+        left: -33.3333333333%;
+      }
+
+      .loading > div:nth-child(11) {
+        top: 66.6666666667%;
+        left: -66.6666666667%;
+      }
+
+      .loading > div:nth-child(12) {
+        top: 33.3333333333%;
+        left: -100%;
+      }
+
+      .loading > div:nth-child(13) {
+        top: 0;
+        left: -100%;
+      }
+
+      .loading > div:nth-child(14) {
+        top: -33.3333333333%;
+        left: -100%;
+      }
+
+      .loading > div:nth-child(15) {
+        top: -66.6666666667%;
+        left: -66.6666666667%;
+      }
+
+      .loading > div:nth-child(16) {
+        top: -100%;
+        left: -33.3333333333%;
+      }
+
+      @keyframes ball-8bits {
+        0% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 1;
+        }
+
+        51% {
+          opacity: 0;
+        }
+      }
+      .error-icon {
+        color: #ef5350;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .error-icon {
+          color: #ef5350; /* 暗色模式下的背景色，红色 */
+        }
+      }
+      .success-icon {
+        color: #4caf50; /* Success green color for light mode */
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .success-icon {
+          color: #66bb6a; /* Darker green for dark mode */
+        }
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log("Service Worker 注册成功:", registration);
+
+              function switchIcon() {
+                const status = document.getElementById("status-icon");
+                status.innerHTML = `<div class ="success-icon"><img class="svg-down" src="./check_mark_color.svg" alt=""></div>`;
+              }
+              function reload() {
+                location.reload();
+              }
+
+              setTimeout(switchIcon, 3000);
+
+              setTimeout(reload, 6000);
+            })
+            .catch(function (err) {
+              console.log("Service Worker 注册失败:", err);
+
+              function switchIcon() {
+                const status = document.getElementById("status-icon");
+                status.innerHTML = `<div class ="error-icon"><img class="svg-down" src="./cross_mark_color.svg" alt=""></div>`;
+              }
+
+              setTimeout(switchIcon, 3000);
+            });
+        }
+      });
     </script>
   </head>
+  <body>
+    <center>
+      <img alt="" class="svg-on" src="./high_voltage_color.svg" />
+    </center>
+    <center>
+      <div id="status-icon">
+        <div class="loading">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </center>
+  </body>
 </html>
